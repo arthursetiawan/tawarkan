@@ -11,6 +11,10 @@ export function SiteHeader() {
           <span className="brand__name">TawarKan</span>
         </Link>
         <p className="brand__tag">Tawar-menawar gadget — ask, counter, sepakat.</p>
+        <nav className="site-nav" aria-label="Utama">
+          <Link href="/">Feed</Link>
+          <Link href="/pasang">Pasang</Link>
+        </nav>
       </div>
     </header>
   );

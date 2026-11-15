@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   CATEGORY_LABELS,
-  listings,
   type Category,
   type Condition,
 } from "@/data/listings";
+import { IdentityBar } from "@/components/IdentityBar";
 import { ListingCard } from "@/components/ListingCard";
+import { useStore } from "@/components/StoreProvider";
 
 const CATEGORIES: Array<Category | "semua"> = [
   "semua",
@@ -20,6 +22,7 @@ const CATEGORIES: Array<Category | "semua"> = [
 const CONDITIONS: Array<Condition | "semua"> = ["semua", "baru", "bekas"];
 
 export function FeedClient() {
+  const { ready, listings } = useStore();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<Category | "semua">("semua");
   const [condition, setCondition] = useState<Condition | "semua">("semua");
@@ -30,18 +33,26 @@ export function FeedClient() {
       if (category !== "semua" && item.category !== category) return false;
       if (condition !== "semua" && item.condition !== condition) return false;
       if (!q) return true;
-      const hay = `${item.title} ${item.brand} ${item.city} ${item.sellerName}`.toLowerCase();
+      const hay =
+        `${item.title} ${item.brand} ${item.city} ${item.sellerName}`.toLowerCase();
       return hay.includes(q);
     });
-  }, [query, category, condition]);
+  }, [listings, query, category, condition]);
 
   return (
     <section className="feed">
       <div className="feed__intro">
         <h1 className="feed__headline">Cari, tawar, sepakat</h1>
         <p className="feed__sub">
-          Ponsel, audio, tablet, dan wearable — harga ask jelas, counter langsung.
+          Ponsel, audio, tablet, dan wearable — harga ask jelas, counter dua
+          arah sampai Sepakat.
         </p>
+        <div className="feed__toolbar">
+          <IdentityBar />
+          <Link href="/pasang" className="btn btn--primary">
+            Pasang listing
+          </Link>
+        </div>
       </div>
 
       <div className="feed__controls">
@@ -83,10 +94,13 @@ export function FeedClient() {
       </div>
 
       <p className="feed__count">
-        {filtered.length} listing
-        {query || category !== "semua" || condition !== "semua"
-          ? " cocok filter"
-          : ""}
+        {!ready
+          ? "Memuat…"
+          : `${filtered.length} listing${
+              query || category !== "semua" || condition !== "semua"
+                ? " cocok filter"
+                : ""
+            }`}
       </p>
 
       <div className="listing-grid">
@@ -95,9 +109,10 @@ export function FeedClient() {
         ))}
       </div>
 
-      {filtered.length === 0 && (
+      {ready && filtered.length === 0 && (
         <p className="feed__empty">
-          Tidak ada listing. Coba ubah kata kunci atau filter.
+          Tidak ada listing. Coba ubah kata kunci atau{" "}
+          <Link href="/pasang">pasang yang baru</Link>.
         </p>
       )}
     </section>

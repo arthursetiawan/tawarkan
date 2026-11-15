@@ -118,6 +118,163 @@ input {
   margin: 0;
   color: var(--ink-soft);
   font-size: 0.95rem;
+  flex: 1;
+}
+
+.site-nav {
+  display: flex;
+  gap: 0.85rem;
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.site-nav a:hover {
+  color: var(--brand-deep);
+}
+
+.feed__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+
+.identity-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.identity-bar--muted {
+  margin: 0;
+}
+
+.identity-bar--edit {
+  gap: 0.4rem;
+}
+
+.field--inline input {
+  min-width: 10rem;
+}
+
+.btn--small {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.88rem;
+}
+
+.listing-card__tags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.trust-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(15, 107, 82, 0.85);
+  color: #f4fff9;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+}
+
+.trust-badge--warn {
+  background: rgba(138, 59, 43, 0.9);
+}
+
+.detail__hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.photo-row {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.photo-row img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
+.create-form {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 1rem;
+  max-width: 720px;
+}
+
+.create-form__grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.create-form__checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.field select,
+.field textarea {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  background: #fff;
+  width: 100%;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.bargain__empty,
+.bargain__meta,
+.report-done {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.thread-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.report-block {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.report-form {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 28rem;
 }
 
 .feed,
