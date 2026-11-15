@@ -3,19 +3,31 @@ import { CATEGORY_LABELS, type Listing } from "@/data/listings";
 import { formatIDR } from "@/lib/format";
 
 export function ListingCard({ listing }: { listing: Listing }) {
+  const href = `/item?id=${encodeURIComponent(listing.id)}`;
+  const photo = listing.photoUrls[0];
+
   return (
-    <Link href={`/listing/${listing.id}`} className="listing-card">
+    <Link href={href} className="listing-card">
       <div
         className="listing-card__visual"
-        style={{ background: `linear-gradient(145deg, ${listing.accent}, #0f1c18)` }}
+        style={{
+          background: photo
+            ? `center/cover url(${photo}), linear-gradient(145deg, ${listing.accent}, #0f1c18)`
+            : `linear-gradient(145deg, ${listing.accent}, #0f1c18)`,
+        }}
         aria-hidden
       >
         <span className="listing-card__condition">
           {listing.condition === "baru" ? "Baru" : "Bekas"}
         </span>
-        <span className="listing-card__category">
-          {CATEGORY_LABELS[listing.category]}
-        </span>
+        <div className="listing-card__tags">
+          {listing.meetupCod && (
+            <span className="listing-card__category">COD</span>
+          )}
+          <span className="listing-card__category">
+            {CATEGORY_LABELS[listing.category]}
+          </span>
+        </div>
       </div>
       <div className="listing-card__body">
         <h2 className="listing-card__title">{listing.title}</h2>
@@ -29,6 +41,7 @@ export function ListingCard({ listing }: { listing: Listing }) {
             ? `BH ${listing.batteryHealth}% · `
             : ""}
           {listing.fullset ? "Fullset" : "Tidak fullset"} · {listing.garansi}
+          {listing.reported ? " · Dilaporkan" : ""}
         </p>
       </div>
     </Link>

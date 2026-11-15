@@ -13,10 +13,20 @@ export type Listing = {
   garansi: string;
   batteryHealth: number | null;
   fullset: boolean;
+  photoUrls: string[];
+  /** Optional IMEI or serial for trust / authenticity checks. */
+  imeiSerial: string | null;
+  /** Seller open to COD / ketemuan. */
+  meetupCod: boolean;
+  sellerId: string;
   sellerName: string;
   sellerRating: number;
   sellerDeals: number;
   accent: string;
+  createdAt: string;
+  /** Soft-report flag (client-side MVP). */
+  reported: boolean;
+  reportNote: string | null;
 };
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -26,7 +36,10 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   wearable: "Wearable",
 };
 
-export const listings: Listing[] = [
+const SEED_CREATED = "2026-11-01T00:00:00.000Z";
+
+/** Built-in demo inventory (smartphones & gadgets only). */
+export const seedListings: Listing[] = [
   {
     id: "iphone-15-pro-128",
     title: "iPhone 15 Pro 128GB Natural Titanium",
@@ -40,10 +53,17 @@ export const listings: Listing[] = [
     garansi: "Sisa resmi Indo s/d Apr 2026",
     batteryHealth: 94,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-raka",
     sellerName: "Raka Gadget",
     sellerRating: 4.9,
     sellerDeals: 128,
     accent: "#1f6f5b",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "samsung-s24-ultra",
@@ -58,10 +78,17 @@ export const listings: Listing[] = [
     garansi: "Resmi SEIN 11 bulan",
     batteryHealth: 97,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-dapur",
     sellerName: "Dapur Gadget BD",
     sellerRating: 4.8,
     sellerDeals: 86,
     accent: "#245b8c",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "xiaomi-14t-pro",
@@ -76,10 +103,17 @@ export const listings: Listing[] = [
     garansi: "Resmi 15 bulan",
     batteryHealth: null,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-sby",
     sellerName: "Toko Gadget SBY",
     sellerRating: 4.7,
     sellerDeals: 210,
     accent: "#c45c26",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "pixel-8-pro",
@@ -94,10 +128,17 @@ export const listings: Listing[] = [
     garansi: "Toko 30 hari",
     batteryHealth: 91,
     fullset: false,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: false,
+    sellerId: "seed-pixel",
     sellerName: "Pixel Corner",
     sellerRating: 4.6,
     sellerDeals: 54,
     accent: "#3d5a40",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "airpods-pro-2",
@@ -112,10 +153,17 @@ export const listings: Listing[] = [
     garansi: "Habis (toko 7 hari)",
     batteryHealth: 91,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-audio",
     sellerName: "AudioLab JKT",
     sellerRating: 4.9,
     sellerDeals: 173,
     accent: "#1f6f5b",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "sony-wh1000xm5",
@@ -130,10 +178,17 @@ export const listings: Listing[] = [
     garansi: "Resmi Sony Indo 1 tahun",
     batteryHealth: null,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-sound",
     sellerName: "SoundHouse",
     sellerRating: 4.8,
     sellerDeals: 97,
     accent: "#245b8c",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "nothing-ear-a",
@@ -148,14 +203,21 @@ export const listings: Listing[] = [
     garansi: "Sisa 8 bulan",
     batteryHealth: 95,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-jogja",
     sellerName: "Jogja Tech",
     sellerRating: 4.5,
     sellerDeals: 41,
     accent: "#c45c26",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "ipad-air-m2",
-    title: "iPad Air M2 11\" 128GB Blue + Pencil Pro",
+    title: 'iPad Air M2 11" 128GB Blue + Pencil Pro',
     brand: "Apple",
     category: "tablet",
     condition: "bekas",
@@ -166,10 +228,17 @@ export const listings: Listing[] = [
     garansi: "Sisa resmi s/d Agu 2026",
     batteryHealth: 96,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-kreator",
     sellerName: "Kreator Store",
     sellerRating: 4.9,
     sellerDeals: 62,
     accent: "#3d5a40",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "galaxy-tab-s9",
@@ -184,10 +253,17 @@ export const listings: Listing[] = [
     garansi: "Toko 14 hari",
     batteryHealth: 93,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: false,
+    sellerId: "seed-medan",
     sellerName: "Medan Gadget Hub",
     sellerRating: 4.7,
     sellerDeals: 119,
     accent: "#1f6f5b",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "lenovo-pad-pro",
@@ -202,10 +278,17 @@ export const listings: Listing[] = [
     garansi: "Resmi 1 tahun",
     batteryHealth: null,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-bekasi",
     sellerName: "Bekasi Digital",
     sellerRating: 4.6,
     sellerDeals: 38,
     accent: "#245b8c",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "apple-watch-ultra-2",
@@ -220,10 +303,17 @@ export const listings: Listing[] = [
     garansi: "Sisa resmi s/d Jan 2027",
     batteryHealth: 94,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: "UW2-DEMO-88421",
+    meetupCod: true,
+    sellerId: "seed-island",
     sellerName: "Island Wearables",
     sellerRating: 4.8,
     sellerDeals: 33,
     accent: "#c45c26",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "garmin-fenix-7",
@@ -238,10 +328,17 @@ export const listings: Listing[] = [
     garansi: "Habis (garansi toko 30 hari)",
     batteryHealth: null,
     fullset: false,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-runlab",
     sellerName: "RunLab ID",
     sellerRating: 4.9,
     sellerDeals: 77,
     accent: "#3d5a40",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
   {
     id: "galaxy-watch-7",
@@ -256,13 +353,34 @@ export const listings: Listing[] = [
     garansi: "Resmi 1 tahun",
     batteryHealth: null,
     fullset: true,
+    photoUrls: [],
+    imeiSerial: null,
+    meetupCod: true,
+    sellerId: "seed-mks",
     sellerName: "Makassar Mobile",
     sellerRating: 4.7,
     sellerDeals: 145,
     accent: "#1f6f5b",
+    createdAt: SEED_CREATED,
+    reported: false,
+    reportNote: null,
   },
 ];
 
+/** @deprecated Use seedListings + store; kept for generateStaticParams. */
+export const listings = seedListings;
+
+export function getSeedListing(id: string): Listing | undefined {
+  return seedListings.find((item) => item.id === id);
+}
+
+/** @deprecated Prefer store lookup. */
 export function getListing(id: string): Listing | undefined {
-  return listings.find((item) => item.id === id);
+  return getSeedListing(id);
+}
+
+const ACCENTS = ["#1f6f5b", "#245b8c", "#c45c26", "#3d5a40"];
+
+export function pickAccent(index = 0): string {
+  return ACCENTS[index % ACCENTS.length];
 }
