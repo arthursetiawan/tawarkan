@@ -167,6 +167,36 @@ export function acceptAsk(state: BargainState): BargainState {
   return simulateSellerResponse(next, state.askPrice);
 }
 
+/** Buyer counter validation — idle or after seller counter (re-counter). */
+export function validateBuyerCounter(
+  state: BargainState,
+  amount: number,
+): string | null {
+  const ask = state.askPrice;
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return "Masukkan nominal penawaran yang valid.";
+  }
+  if (amount >= ask) {
+    return "Counter harus di bawah harga ask — atau terima ask.";
+  }
+  if (amount < Math.round(ask * 0.5)) {
+    return "Penawaran terlalu rendah untuk MVP simulasi ini.";
+  }
+  if (
+    state.phase === "seller_counter" &&
+    state.lastSellerOffer != null &&
+    state.lastBuyerOffer != null
+  ) {
+    if (amount <= state.lastBuyerOffer) {
+      return "Re-counter harus di atas penawaran kamu sebelumnya.";
+    }
+    if (amount >= state.lastSellerOffer) {
+      return "Di atas counter penjual — gunakan Terima counter.";
+    }
+  }
+  return null;
+}
+
 export function submitCounter(
   state: BargainState,
   amount: number,

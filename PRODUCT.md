@@ -13,7 +13,7 @@ Smartphones, audio, tablets, and wearables (new + *bekas*). Vehicles stay out of
 1. Browse feed — search + category + condition (`baru` / `bekas`).
 2. Open listing — ask price, garansi, battery health %, fullset, seller rating.
 3. Buyer **accepts ask** or **counters**.
-4. Simulated seller responds: accept → **Sepakat**, counter → buyer accepts/walks, or decline → walk-away.
+4. Simulated seller responds: accept → **Sepakat**, counter → buyer **terima / re-counter / walk-away**, or decline → walk-away (re-counter can repeat until sepakat or walk-away).
 5. Bargain state persists in `sessionStorage` per listing (no auth/backend yet).
 
 ## Explicitly deferred

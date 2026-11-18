@@ -10,6 +10,7 @@ import {
   loadBargainState,
   saveBargainState,
   submitCounter,
+  validateBuyerCounter,
   type BargainState,
 } from "@/lib/bargain";
 import { formatIDR } from "@/lib/format";
@@ -55,16 +56,9 @@ export function BargainPanel({ listingId, askPrice, title }: Props) {
 
   function onSubmitCounter() {
     const amount = Number(counterInput.replace(/\D/g, ""));
-    if (!Number.isFinite(amount) || amount <= 0) {
-      setError("Masukkan nominal penawaran yang valid.");
-      return;
-    }
-    if (amount >= askPrice) {
-      setError("Counter harus di bawah harga ask — atau terima ask.");
-      return;
-    }
-    if (amount < Math.round(askPrice * 0.5)) {
-      setError("Penawaran terlalu rendah untuk MVP simulasi ini.");
+    const validation = validateBuyerCounter(state, amount);
+    if (validation) {
+      setError(validation);
       return;
     }
     apply(submitCounter(state, amount));
@@ -119,8 +113,8 @@ export function BargainPanel({ listingId, askPrice, title }: Props) {
           <p className="bargain__banner-title">Penjual counter</p>
           <p>
             Penjual tawar balik{" "}
-            <strong>{formatIDR(state.lastSellerOffer)}</strong>. Terima atau walk
-            away.
+            <strong>{formatIDR(state.lastSellerOffer)}</strong>. Terima, re-counter
+            di antara kamu dan penjual, atau walk away.
           </p>
           <div className="bargain__actions">
             <button type="button" className="btn btn--primary" onClick={onAcceptCounter}>
@@ -128,6 +122,28 @@ export function BargainPanel({ listingId, askPrice, title }: Props) {
             </button>
             <button type="button" className="btn btn--ghost" onClick={onWalkAway}>
               Walk away
+            </button>
+          </div>
+          <div className="bargain__form bargain__form--nested">
+            <div className="bargain__or">atau counter lagi</div>
+            <label className="field">
+              <span>
+                Re-counter (antara{" "}
+                {state.lastBuyerOffer != null
+                  ? formatIDR(state.lastBuyerOffer)
+                  : "—"}{" "}
+                dan {formatIDR(state.lastSellerOffer)})
+              </span>
+              <input
+                inputMode="numeric"
+                value={counterInput}
+                onChange={(e) => setCounterInput(e.target.value)}
+                placeholder="Mis. 14000000"
+              />
+            </label>
+            {error && <p className="field__error">{error}</p>}
+            <button type="button" className="btn btn--secondary" onClick={onSubmitCounter}>
+              Kirim re-counter
             </button>
           </div>
         </div>
